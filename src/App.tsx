@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Display from './scenes/display'
+import Dropboard from './scenes/dropboard'
+import EqualBoard from './scenes/equal-board'
+import NumbersBoard from './scenes/numbers-board'
+import OperationBoard from './scenes/operators-board'
+import SwitchButton from './shared/SwitchButton'
+import { SwitchButtonsIcons, SwitchButtonsText } from './shared/types'
 
-function App() {
+function App (): JSX.Element {
+  const [switchActive, setSwitchActive] = useState(
+    SwitchButtonsText.Constructor
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app">
+      <div className="my-9 flex justify-center items-center gap-14 h-3/4">
+        <div
+          className="flex flex-col gap-3 w-60"
+          onClick={() => {
+            setSwitchActive(SwitchButtonsText.Runtime)
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <Display />
+          <OperationBoard />
+          <NumbersBoard />
+          <EqualBoard />
+        </div>
+        <div className="flex flex-col gap-8 h-full">
+          <div className="flex justify-center gap-1 p-px bg-gray rounded">
+            <SwitchButton
+              buttonText={SwitchButtonsText.Runtime}
+              buttonIcon={
+                switchActive === SwitchButtonsText.Runtime
+                  ? SwitchButtonsIcons.RuntimeIconActive
+                  : SwitchButtonsIcons.RuntimeIconInactive
+              }
+              isActive={switchActive === SwitchButtonsText.Runtime}
+            />
+            <SwitchButton
+              buttonText={SwitchButtonsText.Constructor}
+              buttonIcon={
+                switchActive === SwitchButtonsText.Constructor
+                  ? SwitchButtonsIcons.ConstructorIconActive
+                  : SwitchButtonsIcons.ConstructorIconInactive
+              }
+              isActive={switchActive === SwitchButtonsText.Constructor}
+            />
+          </div>
+          <Dropboard />
+        </div>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
