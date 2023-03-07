@@ -7,7 +7,7 @@ interface Props {
 
 const ActionButton = ({ operatorType, isExtended }: Props): JSX.Element => {
   return (
-    <button className={`flex-auto text-center font-medium rounded-md border border-light-gray p-2 ${isExtended ? 'col-span-2' : ''}`}>{operatorType}</button>
+    <div className={`flex-auto text-center font-medium rounded-md border border-light-gray p-2 ${isExtended ? 'col-span-2' : ''}`}>{operatorType}</div>
   )
 }
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Display from './scenes/display'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useSelector } from 'react-redux'
+import Dragboard from './scenes/dragboard'
 import Dropboard from './scenes/dropboard'
-import EqualBoard from './scenes/equal-board'
-import NumbersBoard from './scenes/numbers-board'
-import OperationBoard from './scenes/operators-board'
 import SwitchButton from './shared/SwitchButton'
 import { SwitchButtonsIcons, SwitchButtonsText } from './shared/types'
 
@@ -11,20 +11,21 @@ function App (): JSX.Element {
   const [switchActive, setSwitchActive] = useState(
     SwitchButtonsText.Constructor
   )
+  const items = useSelector((state: string) => state)
+  console.log(items)
+
+  // const [droppedItems, setDroppedItems] = useState([])
 
   return (
+    <DndProvider backend={HTML5Backend}>
     <div className="app">
       <div className="my-9 flex justify-center items-center gap-14 h-3/4">
         <div
-          className="flex flex-col gap-3 w-60"
           onClick={() => {
             setSwitchActive(SwitchButtonsText.Runtime)
           }}
         >
-          <Display />
-          <OperationBoard />
-          <NumbersBoard />
-          <EqualBoard />
+          <Dragboard />
         </div>
         <div className="flex flex-col gap-8 h-full">
           <div className="flex justify-center gap-1 p-px bg-gray rounded">
@@ -47,10 +48,11 @@ function App (): JSX.Element {
               isActive={switchActive === SwitchButtonsText.Constructor}
             />
           </div>
-          <Dropboard />
+            <Dropboard />
         </div>
       </div>
     </div>
+    </DndProvider>
   )
 }
 
